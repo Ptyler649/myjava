@@ -3,8 +3,21 @@ public class meteor{
 	{
 		System.out.println("Meteor - fireball");
 		
-		meteor mymeteor = new meteor();
+		// Traditional
+		//meteor mymeteor = new meteor();
+		//mymeteor.go();
+		
+		// Anonymous inner class call
+		meteor mymeteor = new meteor()
+		{
+			void go()
+			{
+				System.out.println("very very big fireball viewing, my first ever");
+			}
+		};
+		
 		mymeteor.go();
+		
 	}
 
 	void go()
