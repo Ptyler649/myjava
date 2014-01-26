@@ -67,8 +67,15 @@ public class myjarvis{
 
 
 			// split REMEMBER DESC TIME
+			String checkRemember ="";
+			System.out.println(myinput.length());
+			if(myinput.length() > 7)
+			{		
+				checkRemember = myinput.substring(0,8);
+			}
+
 			File myfile = new File("jarvismem.txt");
-			if(myinput.equals("REMEMBER"))
+			if(checkRemember.equals("remember"))
 			{
 			// store a reminder
 
@@ -89,6 +96,8 @@ public class myjarvis{
 				
 
 			// check if a reminder is required at this time
+			if(myfile.exists())
+			{
 			try
 			{
 				FileReader fr = new FileReader(myfile);
@@ -101,6 +110,7 @@ public class myjarvis{
 			catch(Exception f)
 			{
 				f.printStackTrace();
+			}
 			}
 
 
