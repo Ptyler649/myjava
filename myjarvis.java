@@ -168,24 +168,74 @@ public class myjarvis{
 				
 					try
 					{
+						ArrayList<String> mylist = new ArrayList<String>();
 						String checkedInput = myinput.substring(14,myinput.length());
 						BufferedReader an = new BufferedReader(new FileReader(myfile));
 						String line;
 						while((line = an.readLine()) != null)
 						{
-    						//System.out.println(line);
+    						
     						if(checkedInput.equals(line))
     						{
-    							System.out.println("Found:"+checkedInput);
+    							System.out.println("Ok Sir, I have removed:"+checkedInput);
     						}
     						else
     						{
-    							System.out.println("Not Found:"+line);	
+    							mylist.add(line);	
     						}
-    						// add to an array only if value does not match
 						}
-						// output array creating the new file - the matched value above						
+
+						
+						// remove the old list in preperation for the amended list
+						try
+						{
+							if(myfile.exists())
+							{
+								//System.out.println("Delete the file");
+								System.gc();
+								myfile.delete();
+							}
+						}
+
+						catch(Exception e)
+						{
+							e.printStackTrace();
+						}
+
+
+						// output array creating the new file - the matched value above					
+
+						// create the new amended file
+
+						System.out.println("sir, the new list is: ");
+						//String actualNote = myinput.substring(9,myinput.length());
+						try
+						{
+							myfile.createNewFile();
+							BufferedWriter output = new BufferedWriter(new FileWriter(myfile, true));
+							//output.write(actualNote);
+
+							for(int i = 0; i < mylist.size(); i++)
+							{
+								System.out.println(mylist.get(i));
+								output.write(mylist.get(i));
+								output.newLine();
+
+							};
+
+							output.newLine();
+							output.close();
+						}
+							catch(Exception e)
+						{
+							e.printStackTrace();
+						};
+
+						
+
 						// then print out contents of the file
+						// so now remove original file and print out the new lines to the new file
+
 						an.close();
 					}
 					catch(Exception e)
