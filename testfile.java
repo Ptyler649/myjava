@@ -76,5 +76,11 @@ public class testfile{
 	}
 
 
+	// Method to remove an item from the arraylist and return the modified array
+	// aListColors.remove("blue");  where aListColor is the arrayList
+
+
+
+
 
 }

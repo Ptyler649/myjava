@@ -10,6 +10,10 @@ public class myjarvis{
 		String myinput = "";
 		BufferedReader myread = new BufferedReader (new InputStreamReader(System.in));
 		File myfile = new File("jarvismem.txt");
+		myjarvis myobj = new myjarvis();
+		ArrayList<String> mylist = new ArrayList<String>();
+
+
 
 
 		// get sysdate
@@ -30,6 +34,8 @@ public class myjarvis{
 		//System.out.println("24 clock time is :"+currTime24);
 		//System.out.println("Standard clock time is : "+currTimeSTD);
 
+
+
 		
 		// Greeting
 		if(Integer.parseInt(sysdate.substring(11,13)) < 13)
@@ -42,10 +48,13 @@ public class myjarvis{
 		}
 
 
+
+
 		// infinite loop
 		int x = 0;
 		while (x != 99)
 		{
+
 			// take input
 			try
 			{
@@ -55,6 +64,8 @@ public class myjarvis{
 			{
 				e.printStackTrace();
 			}
+
+
 
 
 			// greeting response
@@ -69,11 +80,12 @@ public class myjarvis{
 
 
 
+
+
 			// check remember
 			boolean retval = myinput.contains("remember");			
 			if(retval)
 			{
-
 			// split REMEMBER DESC TIME
 			String checkRemember ="";
 			//System.out.println(myinput.length());
@@ -85,22 +97,18 @@ public class myjarvis{
 			//File myfile = new File("jarvismem.txt");
 			if(checkRemember.equals("remember"))
 			{
-				// store a reminder
+				// store the actual reminder note minus the reminder text
 				String actualNote = myinput.substring(9,myinput.length());
-				try
-				{
-					myfile.createNewFile();
-					BufferedWriter output = new BufferedWriter(new FileWriter(myfile, true));
-					output.write(actualNote);
-					output.newLine();
-					output.close();
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
-				}
+				// load array from file				
+				mylist = myobj.loadArray("jarvismem.txt");
+				// add actualNote to array
+				mylist.add(actualNote);
+				// load file from array
+				myobj.loadFile(mylist, "jarvismem.txt");
 			}
+			}
+
+
 				
 			// List - list what is is the mem list
 			retval = myinput.contains("what have we got jarvis");
@@ -127,25 +135,26 @@ public class myjarvis{
 			
 				else
 				{
-					System.out.println("no list yet, sir - would you like to remember something for later?");
+					// need to sort this out - should remove this but add a check for empty file contents being red in from the file
+					System.out.println("no list yet, sir - would you like me to remember something for later?");
 				}
 			}	
 
 
 
-			// start a new list by deleting the old list
+			// Delete whole of list and start again
 			retval = myinput.contains("new list");	
-			//System.out.println(retval);
-
 			if(retval)
 			{
 				try
 				{
 					if(myfile.exists())
 					{
-						//System.out.println("Delete the file");
-						System.gc();
-						myfile.delete();
+						//
+						myjarvis myobjdel = new myjarvis();
+						ArrayList<String> mylistdel = new ArrayList<String>();
+						// load new file from an empty array to delete the file contents consistently
+						myobjdel.loadFile(mylistdel, "jarvismem.txt");
 					}
 				}
 				catch(Exception e)
@@ -156,87 +165,23 @@ public class myjarvis{
 
 
 			// removal of a particular item from the list
-			// jarvis remove <variable> from the list
 			retval = myinput.contains("jarvis remove");
 			if(retval)
 			{
-				//System.out.println("Remove: "+myinput.length());
-				//System.out.println(myinput.substring(14,myinput.length()));
-
 				if(myfile.exists())
 				{			
 				
 					try
 					{
-						ArrayList<String> mylist = new ArrayList<String>();
 						String checkedInput = myinput.substring(14,myinput.length());
-						BufferedReader an = new BufferedReader(new FileReader(myfile));
-						String line;
-						while((line = an.readLine()) != null)
-						{
-    						
-    						if(checkedInput.equals(line))
-    						{
-    							System.out.println("Ok Sir, I have removed:"+checkedInput);
-    						}
-    						else
-    						{
-    							mylist.add(line);	
-    						}
-						}
 
-						
-						// remove the old list in preperation for the amended list
-						try
-						{
-							if(myfile.exists())
-							{
-								//System.out.println("Delete the file");
-								System.gc();
-								myfile.delete();
-							}
-						}
-
-						catch(Exception e)
-						{
-							e.printStackTrace();
-						}
-
-
-						// output array creating the new file - the matched value above					
-
-						// create the new amended file
-
+						// load array from file				
+						mylist = myobj.loadArray("jarvismem.txt");
+						// add actualNote to array
+						mylist.remove(checkedInput);
+						// load file from array
 						System.out.println("sir, the new list is: ");
-						//String actualNote = myinput.substring(9,myinput.length());
-						try
-						{
-							myfile.createNewFile();
-							BufferedWriter output = new BufferedWriter(new FileWriter(myfile, true));
-							//output.write(actualNote);
-
-							for(int i = 0; i < mylist.size(); i++)
-							{
-								System.out.println(mylist.get(i));
-								output.write(mylist.get(i));
-								output.newLine();
-
-							};
-
-							output.newLine();
-							output.close();
-						}
-							catch(Exception e)
-						{
-							e.printStackTrace();
-						};
-
-						
-
-						// then print out contents of the file
-						// so now remove original file and print out the new lines to the new file
-
-						an.close();
+						myobj.loadFile(mylist, "jarvismem.txt");
 					}
 					catch(Exception e)
 					{
@@ -244,10 +189,6 @@ public class myjarvis{
 					}
 				}
 			}
-
-
-
-
 
 
 			// check if a reminder is required at this time
@@ -278,5 +219,71 @@ public class myjarvis{
 		}
 
 	}
+
+
+
+	// Method loads a file into an array and returns the array
+	ArrayList<String> loadArray(String thefile)
+	{
+		//System.out.println("Load array");
+
+		ArrayList<String> myarray = new ArrayList<String>();
+
+		try
+		{
+			BufferedReader an = new BufferedReader(new FileReader(thefile));
+			String line;
+
+			while((line = an.readLine()) != null)
+			{	
+    			myarray.add(line);    						
+			}
+			an.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+
+		};
+
+		return myarray;
+
+	}
+
+
+	// Method Loads an array into a file
+	void loadFile(ArrayList<String> myarray, String thefile)
+	{
+		//System.out.println("Load file");
+
+		File myfile = new File(thefile);
+		try
+		{
+			myfile.createNewFile();
+			BufferedWriter output = new BufferedWriter(new FileWriter(myfile));
+
+			for(int i = 0; i < myarray.size(); i++)
+			{
+				System.out.println(myarray.get(i));
+				output.write(myarray.get(i));
+
+				if(i+1 < myarray.size())
+					output.newLine();
+			};
+			output.newLine();
+			output.close();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		};
+
+	}
+
+
+	// Method to remove an item from the arraylist and return the modified array
+	// aListColors.remove("blue");  where aListColor is the arrayList
+
+
 
 }
