@@ -44,7 +44,21 @@ public class myjarvis{
 		}
 		else
 		{
-			System.out.println("Good afternoon sir, how are you?");		
+			if(Integer.parseInt(sysdate.substring(11,13)) < 17)
+			{
+				System.out.println("Good afternoon sir, how are you?");		
+			}
+			else
+			{
+				if(Integer.parseInt(sysdate.substring(11,13)) < 23)
+				{	
+					System.out.println("Good evening sir, how are you?");						
+				}
+				else
+				{
+					System.out.println("Working late tonight sir, what can i do?");	
+				}
+			}
 		}
 
 
@@ -121,22 +135,24 @@ public class myjarvis{
 					{
 						BufferedReader in = new BufferedReader(new FileReader(myfile));
 						String line;
+						int numLines = 0;
+						int lineLength = 0;
 						while((line = in.readLine()) != null)
 						{
+							numLines++;
+							lineLength = line.length();
     						System.out.println(line);
 						}
 						in.close();
+						if(lineLength == 0 && numLines == 1)
+						{
+							System.out.println("no list yet, sir - would you like me to remember something for later?");	
+						}	
 					}
 					catch(Exception e)
 					{
 						e.printStackTrace();
 					}
-				}
-			
-				else
-				{
-					// need to sort this out - should remove this but add a check for empty file contents being red in from the file
-					System.out.println("no list yet, sir - would you like me to remember something for later?");
 				}
 			}	
 
@@ -192,6 +208,7 @@ public class myjarvis{
 
 
 			// check if a reminder is required at this time
+			// to be worked on
 			if(myfile.exists())
 			{
 			try
