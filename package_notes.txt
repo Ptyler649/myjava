@@ -8,4 +8,10 @@ note the watch folder will hold the class files
 and there should be similar folder called source
 that holds the source code itself in the java files
 
+also you need to first compile using the below
+javac -d . org/talendframework/source/runtalendjob.java
+javac -d . org/talendframework/source/TalendFramework.java
+
+then run using
+java org/talendframework/watch/TalendFramework
 
