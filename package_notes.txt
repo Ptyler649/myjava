@@ -1,0 +1,11 @@
+javac -d ~ animal.java --will compile using package command
+and create if required the package folders
+
+java org/talendframework/watch/animal  -- will run the
+package as required from root folder
+
+note the watch folder will hold the class files
+and there should be similar folder called source
+that holds the source code itself in the java files
+
+
