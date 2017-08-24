@@ -1,0 +1,4 @@
+run jps - to find out the relevant pid
+then run jstat -gcutil <pid> 200 - this will give you a constant analysis of the java heap memory
+and you add all of this up to give you the number of KB used at anypoint in time
+
