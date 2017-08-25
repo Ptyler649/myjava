@@ -1,0 +1,15 @@
+lsof | egrep filename
+
+this will respond with the process still holding it
+and nothing if its finished.
+
+better than checking file size via the length command
+as sometimes apps create the max size of a file initially to
+help garantee successful transfer so this is not a good option
+
+on windows write access check maybe an option but the process
+would need write access would need to be granted to file
+that is also not garanteed and so lsof is probably a best worst 
+option for unix
+
+
