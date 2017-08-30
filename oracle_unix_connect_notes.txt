@@ -1,0 +1,16 @@
+- check versions of java and oracle and download the appropriate
+ojdbc*.jar version normally ojdbc6.jar
+
+-place this in the target folder same place as the java
+and the class files
+
+-get related code from web, and supply correct credentials
+
+-run javac ora.java
+-run java -cp ojdbc6.jar:. ora
+
+- should return Oracle JDBC Driver Registered!
+
+note: Class.forName("oracle.jdbc.OracleDriver"); instead of
+the "oracle.jdbc.driver.OracleDriver" may work better
+
