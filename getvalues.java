@@ -1,6 +1,6 @@
 public class getvalues{
 	public static void main(String[] args){	
-		String in = "{index : cassini, _id : testing, index : another}}";
+		String in = "{index : \"cassini\", _id : \"testing\", index : \"another\"}}";
 		Integer strlength = in.length();
 		String sstring = "index";
 		int checklength = in.length() - sstring.length();
@@ -47,8 +47,10 @@ public class getvalues{
 									//System.out.println("found comma or }");
 									String actvalueis = in.substring(firstvaluecharindex,abb);
 									valuecount++;
-									if(valuecount >= retvalue){
-										System.out.println("hey:"+actvalueis);
+									if(valuecount <= retvalue){
+										int endind = actvalueis.length()-1;
+										String outval = actvalueis.substring(1,endind);
+										System.out.println("hey:"+outval);
 									};
 									break;
 								} 
