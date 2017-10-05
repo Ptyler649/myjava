@@ -48,8 +48,10 @@ public class getvalues{
 									String actvalueis = in.substring(firstvaluecharindex,abb);
 									valuecount++;
 									if(valuecount <= retvalue){
-										int endind = actvalueis.length()-1;
-										String outval = actvalueis.substring(1,endind);
+										int endind = actvalueis.length();
+										String inval = actvalueis.substring(1,endind);
+										int lastspeechindex = inval.indexOf("\"");
+										String outval = inval.substring(0,lastspeechindex);
 										System.out.println("hey:"+outval);
 									};
 									break;
