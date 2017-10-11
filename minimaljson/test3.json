@@ -1,0 +1,28 @@
+{
+	"4711": {
+		"items": [{
+				"name": "NE555 Timer IC",
+				"cat-id": "645723",
+				"quantity": 10
+			},
+			{
+				"name": "LM358N OpAmp IC",
+				"cat-id": "764525",
+				"quantity": 2
+			}
+		]
+	},
+	"4712": {
+		"items": [{
+				"name": "NE555 Timer IC",
+				"cat-id": "645723",
+				"quantity": 10
+			},
+			{
+				"name": "LM358N OpAmp IC",
+				"cat-id": "764525",
+				"quantity": 2
+			}
+		]
+	}
+}
