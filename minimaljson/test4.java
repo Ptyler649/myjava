@@ -2,10 +2,10 @@ import com.eclipsesource.json.*;
 import com.eclipsesource.json.JsonObject.*;
 import java.io.*;
 
-public class test3{
+public class test4{
 	public static void main(String[] args) throws IOException{
-		System.out.println("test minimal json 3");
-		FileReader fr = new FileReader("test3.json");
+		System.out.println("test minimal json 4");
+		FileReader fr = new FileReader("test4.json");
 
 		//JsonObject object = Json.parse(fr).asObject();
 		//String name = object.get("order").asString();
@@ -25,9 +25,13 @@ public class test3{
 
 		JsonObject orders = Json.parse(fr).asObject();
 		for (Member member : orders) {
-  			String name = member.getName();
-  			//JsonValue value = member.getValue();
-			System.out.println("testing.."+name);
+  			String tr_acl_control_nbr = member.getName();
+  			JsonValue value = member.getValue();
+			System.out.println("acl_control_nbr:"+tr_acl_control_nbr);
+			String tr_act_account_cd = value.asObject().getString("act_account_cd", "unk");
+			System.out.println("  act_account_cd:"+tr_act_account_cd);
+			String tr_act_branch_cd = value.asObject().getString("act_branch_cd", "unk");
+			System.out.println("  act_branch_cd:"+tr_act_branch_cd);
 		};	
 
 
