@@ -1,0 +1,32 @@
+    Unary Operator,
+		++, --, !. also note 
+		x++ = first execute statement then increase value
+		++x = first increase value by one then execute statemen
+		also += means increase and then assign
+		also =+ means assign then increase
+    Arithmetic Operator,
+		+, -, *, / and % as the remainder operator
+    shift Operator,
+		<< moved binary op to rights >> and to left
+		~ bitwise inverts operators 0101 becomes 1010
+		also & is a bitwise & operation
+    Relational Operator,
+		returns a boolean values - true/false
+		exam;ples are <, >, <=, >=, ==, !=
+    Bitwise Operator,
+		~
+    Logical Operator,
+		&& logical - stops evaluating if first operator is false
+			where & will continue evaluating if first operator
+			is false or not 
+		|| logical or
+		& boolean logical and
+		| boolean logicla or
+
+    Ternary Operator and.
+	minval = ( a < b ) ? a : b
+	the above equates to if a < b then a else b
+    Assignment Operator.
+	= for assignment of values but also object references
+
+
