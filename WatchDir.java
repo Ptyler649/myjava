@@ -119,12 +119,7 @@ public class WatchDir {
 
 		// Calling Talend Job
 		if (kind == ENTRY_MODIFY){
-			System.out.format("Calling Talend Job!\n");
-			//runtalendjob.runjob("/home/ptyler649/talend/testfolder/test_args_input_0.1/test_args_input/test_args_input_run_PT.sh");
-
-			// edited out running of talend job
-			//runtalendjob.runjob("/home/ptyler649/talend/testfolder/test_long_running_0.1/test_long_running/test_long_running_run.sh");
-
+			System.out.format("Running autotest process!\n");
 			String thefilename = child.toString();
 			String[] actfile = thefilename.split("/");
 			String theactfile = actfile[1];
@@ -141,7 +136,11 @@ public class WatchDir {
 			for(String oldline : lines){
 				//System.out.format(oldline+"\n");
 				x++;
-				if(x==3){
+				// add routine to check if template lines are in the file,
+				// depending on the status returned then add font format as required
+				// and also change the checkstatus as appropriate
+				Boolean linestatus = isvalidline(oldline);
+				if(!linestatus){
 					newlines.add("<font color=\"red\">"+oldline+"</font><br>");
 				}
 				else{
@@ -151,9 +150,9 @@ public class WatchDir {
 			newlines.add("</body>");
 			newlines.add("</html>");
 			// output newfile lines
-			for(String anewline : newlines){
-				System.out.format(anewline+"\n");
-			};
+			//for(String anewline : newlines){
+			//	System.out.format(anewline+"\n");
+			//};
 			String checkstatus = "FAILED";
 			Path file = Paths.get("status/"+theactfile+"_PRECHECK_"+checkstatus+".html");
 			Files.write(file, newlines, Charset.forName("UTF-8"));
@@ -192,6 +191,21 @@ public class WatchDir {
     static void usage() {
         System.err.println("usage: java WatchDir [-r] dir");
         System.exit(-1);
+    }
+
+    static Boolean isvalidline(String linetocheck) throws IOException{
+	// load template in arraylist
+	Boolean status = false;
+	List<String> lines = Files.readAllLines(Paths.get("testfiles/template"), Charset.forName("UTF-8"));
+	for(String checkline : lines){
+		// loop through the template array checking if linetocheck is present
+		// if linetocheck is not present then return false else true
+		if(checkline.equals(linetocheck)){
+			status = true;
+		}
+	};
+	System.out.format("status:"+status+"\n");	
+	return status;
     }
  
     public static void main(String[] args) throws IOException {
