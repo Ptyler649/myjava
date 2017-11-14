@@ -119,41 +119,49 @@ public class WatchDir {
 
 		// Calling Talend Job
 		if (kind == ENTRY_MODIFY){
+			String checkstatus = "SUCCESS";
 			System.out.format("Running autotest process!\n");
 			String thefilename = child.toString();
 			String[] actfile = thefilename.split("/");
 			String theactfile = actfile[1];
 			System.out.format("create test output html files:"+theactfile+"\n");
-			//runtalendjob.runjob("cp testfiles/test4 status/test5");
 			// load touched file into array
 			List<String> lines = Files.readAllLines(Paths.get(thefilename), Charset.forName("UTF-8"));
-			// load the original file array into a new array with additional html formatting
+			// load the touched file into a new array and added additional html formatting
 			List<String> newlines = new ArrayList<String>();
 			newlines.add("<!DOCTYPE html>");
 			newlines.add("<html>");
 			newlines.add("<body>");
-			int x = 0;
 			for(String oldline : lines){
-				//System.out.format(oldline+"\n");
-				x++;
 				// add routine to check if template lines are in the file,
 				// depending on the status returned then add font format as required
 				// and also change the checkstatus as appropriate
-				Boolean linestatus = isvalidline(oldline);
+				Boolean linestatus = isvalidline(oldline,"testfiles/template");
 				if(!linestatus){
+					checkstatus = "FAILED";
 					newlines.add("<font color=\"red\">"+oldline+"</font><br>");
 				}
 				else{
 					newlines.add(oldline+"<br>");
 				};	
+			
 			};
+
+
+			// now check if there is line completely missing
+			// so reverse previous check, validate template lines against file
+			// and if template line is not found in file, add this template line in red at the end
+			// of the file with MISSING + template line itself
+			List<String> templatelines = Files.readAllLines(Paths.get("testfiles/template"), Charset.forName("UTF-8"));
+			for(String templine : templatelines){
+				Boolean linestatus = isvalidline(templine,thefilename);
+				if(!linestatus){
+					checkstatus = "FAILED";
+					newlines.add("<font color=\"red\">MISSING:"+templine+"</font><br>");
+				};
+			}			
 			newlines.add("</body>");
 			newlines.add("</html>");
-			// output newfile lines
-			//for(String anewline : newlines){
-			//	System.out.format(anewline+"\n");
-			//};
-			String checkstatus = "FAILED";
 			Path file = Paths.get("status/"+theactfile+"_PRECHECK_"+checkstatus+".html");
 			Files.write(file, newlines, Charset.forName("UTF-8"));
 
@@ -193,10 +201,10 @@ public class WatchDir {
         System.exit(-1);
     }
 
-    static Boolean isvalidline(String linetocheck) throws IOException{
+    static Boolean isvalidline(String linetocheck, String filetocheck) throws IOException{
 	// load template in arraylist
 	Boolean status = false;
-	List<String> lines = Files.readAllLines(Paths.get("testfiles/template"), Charset.forName("UTF-8"));
+	List<String> lines = Files.readAllLines(Paths.get(filetocheck), Charset.forName("UTF-8"));
 	for(String checkline : lines){
 		// loop through the template array checking if linetocheck is present
 		// if linetocheck is not present then return false else true
@@ -204,7 +212,7 @@ public class WatchDir {
 			status = true;
 		}
 	};
-	System.out.format("status:"+status+"\n");	
+	//System.out.format("status:"+status+"\n");	
 	return status;
     }
  
