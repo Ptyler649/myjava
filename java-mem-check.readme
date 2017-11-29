@@ -1,0 +1,40 @@
+jps -l = lists the java process id's running
+______________________________________________
+
+java -XX:+PrintFlagsFinal -version | grep -iE 'HeapSize|PermSize|ThreadStackSize'
+_________________________________________________________________________________
+shows the system heap memory in bytes
+
+
+
+jmap -histo:live <pid> | head = gives heap memory usage
+_______________________________________________________
+
+
+
+
+jstat -gc <pid> <optional poll interval>
+________________________________________
+to interpret the results use the below:
+S0 = Survivor space 0 utilization as a percentage of the space's current capacity.
+
+S1 = Survivor space 1 utilization as a percentage of the space's current capacity.
+
+E = Eden space utilization as a percentage of the space's current capacity.
+
+O = Old space utilization as a percentage of the space's current capacity.
+
+P = Permanent space utilization as a percentage of the space's current capacity.
+
+YGC = Number of young generation GC events.
+
+YGCT = Young generation garbage collection time.
+
+FGC = Number of full GC events.
+
+FGCT = Full garbage collection time.
+
+GCT = Total garbage collection time.
+
+
+
