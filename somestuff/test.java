@@ -1,8 +1,10 @@
 public class test{
     public static void main(String[] args){
 
-            System.out.println("testing");
-
+            for(int x = 0; x < 10; x++){
+                System.out.println("testing");
+            }
+        
     }
 
 }
