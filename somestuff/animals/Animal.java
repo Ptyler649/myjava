@@ -1,6 +1,10 @@
+package animals;
+
 public class Animal{
-    
-    void eat(){
+
+        void eat(){
             System.out.println("chomp chomp");
-    }
-}
+        }
+    
+};
+
